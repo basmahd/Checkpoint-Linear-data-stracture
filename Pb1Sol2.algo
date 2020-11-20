@@ -1,0 +1,53 @@
+ALGORITHM sum_distinct_elements
+VAR
+    
+    i,count,sum,n,m,p :integer;
+    set1: ARRAY_OF integer[n];
+    set2: ARRAY_OF integer[m];
+    set3: ARRAY_OF INTEGER[p];
+   htab:HASH_TABLE<integer,integer>;
+    sum:=0;
+BEGIN
+
+//Set elements of set1 array
+
+FOR i FROM 0 TO n-1 STEP 1  DO
+Write('Enter element',i,'of set1' )
+Read(set1[i]);
+END_FOR
+
+//Set elements of set2 array
+
+FOR i FROM 0 TO m-1 STEP 1  DO
+Write('Enter element',i,'of set2' )
+Read(set2[i]);
+END_FOR
+
+//Add elements of set1 to the hash table as keys with values 1(we don't have any duplicate key in the same array)
+FOR i FROM 0 TO set1.length-1 STEP 1  DO
+htab.insert(set1[i],1);
+END_FOR
+//Add elements of set2 to the hash table as keys 
+FOR i FROM 0 TO set2.length-1 STEP step  DO
+   IF (htab.lookup(set2[i])=false) THEN
+      htab.insert(set2[i],1);
+    Else
+    count:=htab.get(set2[i]);
+    htab.insert(set2[i],count+1);
+   END_IF
+END_FOR
+
+//Put all keys in set3 array
+    set3 :=htab.getkeys();
+
+//sum of all distincts elements
+
+FOR i FROM 0 TO set3.length-1 STEP 1  DO
+    IF (htab.get(set3[i])=1) THEN
+        sum=sum+set3[i];
+    END_IF
+END_FOR
+
+Write('the sum of distinct elements is',sum)
+    
+END
